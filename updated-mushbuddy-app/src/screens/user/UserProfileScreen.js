@@ -22,7 +22,6 @@ const UserProfileScreen = (props) => {
     const { auth, users } = useSelector(state => state);
     const dispatch = useDispatch();
     const [id, setId] = useState(auth.user._id);
-    const isFocused = useIsFocused();
 
     const buttons = ['Badges', 'History'];
     const [selectedIndex, setSelectedIndex] = useState(0);
@@ -48,10 +47,6 @@ const UserProfileScreen = (props) => {
         }
     }, []);
 
-    useEffect(() => {
-        //console.log(route.params);
-        console.log(id)
-    }, [isFocused]);
 
     useEffect(() => {
         if (users.allUsers.every(item => item._id !== id)) {

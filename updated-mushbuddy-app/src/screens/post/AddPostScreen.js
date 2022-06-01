@@ -15,7 +15,7 @@ import * as postActions from '../../store/actions/posts';
 import { COLORS } from '../../components/stylesheets/colors';
 import { showMessage } from "react-native-flash-message";
 import RenderCatalogEntry from '../catalog/render_catalog_entry';
-
+import ImagePickerExample from './ImagePicker'
 // props is just all the default properties sent through navigator
 const AddPostScreen = (props) => {
     const { route } = props;
@@ -29,6 +29,7 @@ const AddPostScreen = (props) => {
     // const [longitude, setLongitude] = useState('');
 
     const [desc, setDesc] = useState('No description entered.');
+    const [images, setImages] = useState("https://www.pngitem.com/pimgs/m/114-1146463_red-mushroom-png-fantasy-mushrooms-png-transparent-png.png");
     const [postDateTime, setPostDateTime] = useState('');
     const [firstLoad, setFirstLoad] = useState(false);
 
@@ -118,7 +119,7 @@ const AddPostScreen = (props) => {
                 let date = postDateTime;
 
 
-                let postData = { title, mushroom, content, coordinate, description, date };
+                let postData = { title, mushroom, content, coordinate, description, date, images };
                 await dispatch(postActions.createPost({ postData, auth }));
                 clearForm();
                 showMessage({
@@ -221,8 +222,8 @@ const AddPostScreen = (props) => {
                     </Text>
                     {renderSelectButton()}
                     {renderDescriptionInputField()}
+                    <ImagePickerExample setImages = {setImages}></ImagePickerExample>
                     {renderPostButton()}
-
                     {/* {renderTitleInputField()} */}
                     {/* {renderContentInputField()} */}
                     {/* {renderLatitudeInputField()} */}

@@ -15,7 +15,6 @@ import RenderCatalogEntry from '../catalog/render_catalog_entry';
 const DetailedPost = ({ route, navigation }) => {
     const { postTitle, postDesc, postDate, postImage, mushroom } = route.params;
 
-    console.log(mushroom)
     // not sure what these are for
     const [data, setData] = useState([]);
     const [query, setQuery] = useState('');
