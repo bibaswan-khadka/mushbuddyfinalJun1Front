@@ -15,12 +15,14 @@ import styles from '../../components/stylesheets/profile_styles/profile_style.js
 
 import * as usersActions from '../../store/actions/users';
 import * as postsActions from '../../store/actions/posts';
+import { useIsFocused } from '@react-navigation/native';
 
 const UserProfileScreen = (props) => {
     const { route } = props;
-    const { auth, users, posts } = useSelector(state => state);
+    const { auth, users } = useSelector(state => state);
     const dispatch = useDispatch();
     const [id, setId] = useState(auth.user._id);
+    const isFocused = useIsFocused();
 
     const buttons = ['Badges', 'History'];
     const [selectedIndex, setSelectedIndex] = useState(0);
@@ -45,6 +47,11 @@ const UserProfileScreen = (props) => {
             setId(route.params.userId);
         }
     }, []);
+
+    useEffect(() => {
+        //console.log(route.params);
+        console.log(id)
+    }, [isFocused]);
 
     useEffect(() => {
         if (users.allUsers.every(item => item._id !== id)) {
@@ -95,7 +102,7 @@ const UserProfileScreen = (props) => {
             return (
                 <Posts
                     auth={auth}
-                    posts={posts}
+                    posts={users.posts}
                     id={id}
                     dispatch={dispatch}
                     //handleScroll={handleOnScroll}

@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { ActivityIndicator, View, TextInput, FlatList, Text, SafeAreaView, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { ActivityIndicator, View, TextInput, FlatList, Text, SafeAreaView, Keyboard, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import styles from '../../components/stylesheets/search_styles/search_style';
 import { COLORS } from '../../components/stylesheets/colors';
 import * as usersActions from '../../store/actions/users';
-import ListItem from '../../components/UI/ListItem';
+import ListItemChatScreen from '../../components/UI/ListItemChatScreen';
+import { Ionicons, MaterialCommunityIcons, Octicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import socketIO from 'socket.io-client';
+import { BASE_URL } from '../../utils/config'
+let socket;
 
 const FindPeopleScreen = () => {
     const { auth } = useSelector(state => state);
@@ -15,8 +20,14 @@ const FindPeopleScreen = () => {
     const [error, setError] = useState();
     const [searchText, setSearchText] = useState('');
     const [data, setData] = useState([]);
-    
+    const navigation = useNavigation();
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        socket = socketIO.connect(BASE_URL)
+        socket.emit('joinUser', auth.user)
+        dispatch({type: 'SOCKET', payload: socket})
+    },[])
 
     const loadFindPeople = async () => {
         setIsLoading(true);
@@ -38,18 +49,29 @@ const FindPeopleScreen = () => {
             data={data}
             keyExtractor={(item) => item._id}
             renderItem={(user) => (
-                <ListItem user={user.item} />
+                <ListItemChatScreen user={user.item} />
             )}
             ItemSeparatorComponent={renderSeparator}
             ListEmptyComponent={renderEmptyStatement}
         />
     );
 
+    
+    const renderChatButton = () => {
+        return (
+            <View>
+                <TouchableOpacity onPress={() => navigation.push('ChatList')}>
+                    <Ionicons name="ios-chatbubbles-outline" size={40} color="black" />
+                </TouchableOpacity>
+            </View>
+        );
+    }
 
     const renderHeaderContainer = () => {
         return (
             <View style={styles.headerContainer}>
                 {renderSearchBar()}
+                {renderChatButton()}
             </View>
         );
     }

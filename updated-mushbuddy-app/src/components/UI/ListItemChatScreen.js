@@ -9,7 +9,7 @@ import * as usersActions from '../../store/actions/users';
 import { showMessage } from "react-native-flash-message";
 import { Ionicons, MaterialCommunityIcons, Octicons } from '@expo/vector-icons';
 
-const ListItem = (props) => {
+const ListItemChatScreen = (props) => {
     const { user } = props;
     const [isLoading, setIsLoading] = useState(false);
     const { auth } = useSelector(state => state);
@@ -146,6 +146,7 @@ const ListItem = (props) => {
             <View style={styles.container}>
                 {renderUserAvatar(imageUri)}
                 {renderNameAndHandle(user.firstName, user.lastName, user.username)}
+                {user._id !== loggedInUser._id && renderChatButton()}
                 {user._id !== loggedInUser._id && renderFollowUnfollowButton()}
             </View>
         </TouchableOpacity>
@@ -271,4 +272,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default ListItem;
+export default ListItemChatScreen;

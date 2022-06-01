@@ -7,13 +7,15 @@ import { MenuProvider } from 'react-native-popup-menu';
 import authReducer from './src/store/reducers/auth';
 import usersReducer from './src/store/reducers/users';
 import postsReducer from './src/store/reducers/posts';
+import socketReducer from './src/store/reducers/socket';
 
 import AppNavigator from './src/navigation/AppNavigator';
 
 const rootReducer = combineReducers({
   users: usersReducer,
   auth: authReducer,
-  posts: postsReducer
+  posts: postsReducer,
+  socket: socketReducer
 });
 
 const store = createStore(

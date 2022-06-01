@@ -1,13 +1,31 @@
-import { SET_USERS, SET_FIND_PEOPLE, FOLLOW, UNFOLLOW, FOLLOW_FIND_PEOPLE, UPDATE_USER } from "../actions/users";
+import { GET_USER_POSTS, SET_USER_POSTS, SET_USERS, SET_FIND_PEOPLE, FOLLOW, UNFOLLOW, FOLLOW_FIND_PEOPLE, UPDATE_USER } from "../actions/users";
 import { LOGOUT } from "../actions/auth";
 
 const initialState = {
     allUsers: [],
-    findPeople: []
+    findPeople: [],
+    posts: []
 };
 
 export default (state=initialState, action) => {
     switch(action.type){
+        case GET_USER_POSTS:
+            return {
+                ...state,
+                posts: [...state.posts, action.payload],
+            };
+        case SET_USER_POSTS:
+            let newData = state.posts.map(item => 
+                (item._id === action.payload._id ? action.payload: item)
+            )
+            const postuserInd = state.posts.findIndex(p => p._id === action.payload._id);
+            if (postuserInd == -1){
+                newData = [...newData,action.payload]
+            }
+            return {
+                ...state,
+                posts: newData,
+            };
         case SET_USERS:
             return {
                 ...state,

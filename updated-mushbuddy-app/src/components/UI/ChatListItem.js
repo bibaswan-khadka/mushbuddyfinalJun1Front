@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, ActivityIndicator, TouchableOpacity, TouchableHighlight } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, Image, ActivityIndicator, TouchableOpacity } from 'react-native';
 
 import Colors from '../../constants/Colors';
 import { useSelector, useDispatch } from 'react-redux';
@@ -7,10 +7,9 @@ import { useNavigation } from '@react-navigation/native';
 
 import * as usersActions from '../../store/actions/users';
 import { showMessage } from "react-native-flash-message";
-import { Ionicons, MaterialCommunityIcons, Octicons } from '@expo/vector-icons';
 
-const ListItem = (props) => {
-    const { user } = props;
+const ChatListItem = (props) => {
+    const { conversation } = props;
     const [isLoading, setIsLoading] = useState(false);
     const { auth } = useSelector(state => state);
     const loggedInUserId = useSelector(state => state.auth.user._id);
@@ -19,32 +18,8 @@ const ListItem = (props) => {
 
     const dispatch = useDispatch();
     const navigation = useNavigation();
-
-    const checkFollow = (userId) => {
-        const isFollowed = loggedInUser.following.filter(f => f._id === userId).length !== 0;
-        return isFollowed;
-    }
-
-    const followUserHandler = async () => {
-        if (checkFollow(user._id)) {
-            showMessage({
-                message: `You have unfollowed ${user.firstName}.`,
-                type: "warning",
-                duration: 3000,
-                icon: { icon: "warning", position: 'left' }
-            });
-            await dispatch(usersActions.unfollowUser({ user, auth }))
-        } else {
-            showMessage({
-                message: `You are now following ${user.firstName}.`,
-                type: "success",
-                duration: 3000,
-                icon: { icon: "success", position: 'left' }
-            });
-            await dispatch(usersActions.followUser({ user, auth }));
-        }
-    }
-
+    const user = conversation.recipients.filter(u => u._id !== auth.user._id)[0];
+    
     // check user._id is in following list
 
     const [imageUri, setImageUri] = useState(user.avatar);
@@ -70,83 +45,24 @@ const ListItem = (props) => {
         );
     }
 
-    const renderNameAndHandle = (firstName, lastName, username) => {
-        if (typeof firstName === 'undefined' || typeof lastName === 'undefined') {
+    const renderNameAndHandle = (username, conversation_text) => {
             return (
                 <View style={styles.userInfo}>
-                    <Text style={styles.unnamedText}>
-                        (Unnamed user)
-                    </Text>
                     <Text style={styles.usernameText}>
                         @{username}
                     </Text>
-                </View>
-            );
-        }
-        else {
-            return (
-                <View style={styles.userInfo}>
-                    <Text style={styles.fullnameText}>
-                        {capitalizeFirstLetterOf(firstName)} {capitalizeFirstLetterOf(lastName)}
-                    </Text>
                     <Text style={styles.usernameText}>
-                        @{username}
+                        {conversation_text}
                     </Text>
                 </View>
             );
-        }
-    }
-
-    const renderFollowUnfollowButton = () => {
-        return (
-            <View style={styles.buttonContainer} >
-                {checkFollow(user._id) ? (
-                    <TouchableOpacity
-                        onPress={followUserHandler}
-                        style={styles.buttonUnfollow}
-                    >
-                        {isLoading ? (
-                            <ActivityIndicator size='small' color='white' />
-                        ) : (
-                            <Text style={styles.buttonUnfollowText}>
-                                Unfollow
-                            </Text>
-                        )}
-                    </TouchableOpacity>
-                ) : (
-                    <TouchableOpacity
-                        onPress={followUserHandler}
-                        style={styles.buttonFollow}
-                    >
-                        {isLoading ? (
-                            <ActivityIndicator size='small' color='white' />
-                        ) : (
-                            <Text style={styles.buttonFollowText}>
-                                Follow
-                            </Text>
-                        )}
-                    </TouchableOpacity>
-                )}
-            </View>
-        );
-    }
-
-    const renderChatButton = () => {
-        return (
-            <View style={styles.chat}>
-                <TouchableOpacity onPress={() => navigation.push('ChatScreen', { userId: user._id, name: user.firstName })}>
-                    <Ionicons name="ios-chatbubble-outline" size={18} color="black" />
-                </TouchableOpacity>
-            </View>
-        );
     }
 
     return (
-        <TouchableOpacity onPress={() => navigation.push('UserProfile', { userId: user._id, name: user.firstName })}>
+        <TouchableOpacity onPress={() => navigation.push('ChatScreen', { userId: user._id, name: user.firstName })}>
             <View style={styles.container}>
                 {renderUserAvatar(imageUri)}
-                {renderNameAndHandle(user.firstName, user.lastName, user.username)}
-                {user._id !== loggedInUser._id && renderFollowUnfollowButton()}
+                {renderNameAndHandle(user.username,conversation.text)}
             </View>
         </TouchableOpacity>
     );
@@ -171,9 +87,6 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.2,
         shadowRadius: 7.5,
-    },
-    chat: {
-        marginLeft: 10
     },
     profileImageContainer: {
         width: 50,
@@ -271,4 +184,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default ListItem;
+export default ChatListItem;

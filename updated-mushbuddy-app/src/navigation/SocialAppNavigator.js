@@ -19,6 +19,9 @@ import CatalogFilterNew from '../screens/catalog/filter/catalog_filter_new';
 import CatalogEntry from '../screens/catalog/catalog_entry';
 import MushroomCatalogFiltered from '../screens/catalog/catalog_filterpage';
 import MapNavigator from '../screens/map/map_navigator';
+import CommentsScreen from '../screens/user/CommentsScreen'
+import ChatListScreen from '../screens/chat/ChatListScreen';
+import ChatScreen from '../screens/chat/ChatScreen';
 
 const defaultNavOptions = {
     headerStyle: {
@@ -49,6 +52,18 @@ const FindPeopleNavigator = () => {
                 component={UserStatsScreen}
                 options={userStatsScreenOptions}
             />
+             <FindPeopleStackNavigator.Screen
+                name="Comments"
+                component={CommentsScreen}
+            />
+            <FindPeopleStackNavigator.Screen 
+                name="ChatList"
+                component={ChatListScreen}
+            />
+            <FindPeopleStackNavigator.Screen 
+                name="ChatScreen"
+                component={ChatScreen}
+            />
         </FindPeopleStackNavigator.Navigator>
     );
 };
@@ -74,6 +89,14 @@ const UserNavigator = () => {
                 name="EditProfile"
                 component={EditProfileScreen}
                 options={editProfileScreenOptions}
+            />
+            <UserStackNavigator.Screen
+                name="Comments"
+                component={CommentsScreen}
+            />
+            <UserStackNavigator.Screen 
+                name="ChatScreen"
+                component={ChatScreen}
             />
         </UserStackNavigator.Navigator>
     );
@@ -141,6 +164,21 @@ export const BottomNavigator = () => {
                 activeTintColor: COLORS.brightBlue
             }}
         >
+             <BottomTabNavigator.Screen
+                name="Map"
+                component={MapNavigator}
+                options={{
+                    tabBarLabel: 'Map',
+                    headerShown: false,
+                    tabBarIcon: (props) => (
+                        <Ionicons
+                            name={'map'}
+                            size={24}
+                            color={props.color}
+                        />
+                    ),
+                }}
+            />
             <BottomTabNavigator.Screen
                 name="Profile"
                 component={UserNavigator}
@@ -165,21 +203,6 @@ export const BottomNavigator = () => {
                     tabBarIcon: (props) => (
                         <Ionicons
                             name={'newspaper'}
-                            size={24}
-                            color={props.color}
-                        />
-                    ),
-                }}
-            />
-            <BottomTabNavigator.Screen
-                name="Map"
-                component={MapNavigator}
-                options={{
-                    tabBarLabel: 'Map',
-                    headerShown: false,
-                    tabBarIcon: (props) => (
-                        <Ionicons
-                            name={'map'}
                             size={24}
                             color={props.color}
                         />

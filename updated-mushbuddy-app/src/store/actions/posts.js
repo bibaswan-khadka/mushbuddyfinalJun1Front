@@ -21,8 +21,8 @@ export const fetchPosts = ({id,auth}) => async (dispatch) => {
 
 export const createPost = ({postData, auth}) => async (dispatch) => {
     try {
-        const { title, content, mushroom, coordinate } = postData;
-        const res = await postDataAPI('posts', { title, content, mushroom, coordinate }, auth.token);
+        const { title, content, mushroom, coordinate, description, date } = postData;
+        const res = await postDataAPI('posts', { title, content, mushroom, coordinate, description, date }, auth.token);
         dispatch({ 
             type: CREATE_POST,
             payload: {...res.data.newPost, user: auth.user},
@@ -41,8 +41,8 @@ export const updatePost = ({id, postData, auth}) => async (dispatch) => {
     // console.log(postData);
 
     try {
-        const { title, content, mushroom, coordinate } = postData;
-        const res = await patchDataAPI(`posts/update/${id}`, { title, content, mushroom, coordinate }, auth.token);
+        const { title, content, mushroom, coordinate, description, date } = postData;
+        const res = await patchDataAPI(`posts/update/${id}`, { title, content, mushroom, coordinate, description, date }, auth.token);
         dispatch({ 
             type: UPDATE_POST,
             payload: {...res.data.newPost, user: auth.user},

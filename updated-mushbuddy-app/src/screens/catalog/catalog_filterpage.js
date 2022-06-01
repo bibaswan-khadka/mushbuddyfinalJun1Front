@@ -98,6 +98,38 @@ const MushroomCatalogFiltered = (props) => {
         <RenderCatalogEntry item={item} navigation={navigation} />
     )
 
+    const renderListItemSelector = ({ item }) => (
+        <View>
+            <RenderCatalogEntry item={item} navigation={navigation} />
+            <TouchableOpacity
+                style={{
+                    position: 'absolute',
+                    right: 20,
+                    top: 7.5,
+                    width: '20%',
+                    height: 20,
+                    borderWidth: 1,
+                    borderColor: 'transparent',
+                    borderRadius: 12,
+                    backgroundColor: COLORS.GREEN,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}
+                onPress={() => {
+                    navigation.navigate('CreatePost', { selectedItem: item })}
+                }>
+                <Text style={{
+                    textAlign: 'center',
+                    fontSize: 12,
+                    fontWeight: 'bold',
+                    color: 'white',
+                }}>
+                    Select
+                </Text>
+            </TouchableOpacity>
+        </View>
+    )
+
     const getItemLayout = (data, index) => (
         { length: 100, offset: 100 * index, index }
     );
@@ -203,7 +235,7 @@ const MushroomCatalogFiltered = (props) => {
                 maxToRenderPerBatch={8}
                 windowSize={11}
                 getItemLayout={getItemLayout}
-                renderItem={renderListItem}
+                renderItem={renderListItemSelector}
             />
             {loadingIndicator()}
         </SafeAreaView>

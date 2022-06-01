@@ -1,5 +1,7 @@
 import { getDataAPI, patchDataAPI } from '../../utils/fetchData';
 export const SET_USERS = 'SET_USERS';
+export const GET_USER_POSTS = 'GET_USER_POSTS'
+export const SET_USER_POSTS = 'SET_USER_POSTS'
 export const UPDATE_PROFILE = 'UPDATE_PROFILE';
 export const FOLLOW = 'FOLLOW';
 export const UNFOLLOW = 'UNFOLLOW';

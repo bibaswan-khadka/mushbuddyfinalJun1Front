@@ -173,7 +173,7 @@ const MushroomCatalog = ({ navigation, route }) => {
                 maxToRenderPerBatch={8}
                 windowSize={11}
                 getItemLayout={getItemLayout}
-                renderItem={route.params ? renderListItemSelector: renderListItem}
+                renderItem={renderListItemSelector}
             />
             {loadingIndicator()}
         </SafeAreaView>
