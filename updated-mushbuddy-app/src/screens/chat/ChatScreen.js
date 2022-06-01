@@ -22,7 +22,7 @@ const ChatScreen = (props) => {
                     text: m.text,
                     createdAt: m.createdAt,
                     user: {
-                        _id: m.sender,
+                        _id: m.sender
                     }
                 }
             })
@@ -39,7 +39,7 @@ const ChatScreen = (props) => {
                 text: msg.text,
                 createdAt: msg.createdAt,
                 user: {
-                    _id: msg.sender,
+                    _id: msg.sender
                 }
             }
             console.log('addtoclientrequest')
@@ -68,6 +68,7 @@ const ChatScreen = (props) => {
 
     return (
       <GiftedChat
+        renderAvatar={null}
         text={text}
         onInputTextChanged={text => setText(text)}
         messages={messages}

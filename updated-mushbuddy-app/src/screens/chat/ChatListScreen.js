@@ -59,7 +59,7 @@ const ChatListScreen = () => {
     const renderLoadingIndicator = () => {
         return (
             <View style={styles.centered} >
-                <ActivityIndicator size='large' color={COLORS.primary} />
+                <ActivityIndicator size='large' color={COLORS.GREY_1} />
             </View>
         );
     }

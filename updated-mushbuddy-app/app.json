@@ -8,8 +8,8 @@
         }
       ]
     ],
-    "name": "mushbuddy-app-test",
-    "slug": "mushbuddy-app-test",
+    "name": "mushbuddy-app-updated",
+    "slug": "mushbuddy-app-updated",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

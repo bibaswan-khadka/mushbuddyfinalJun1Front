@@ -13,7 +13,6 @@ import Colors from '../../constants/Colors';
 import { useNavigation } from '@react-navigation/native';
 
 const Info = ({ id, auth, dispatch, users }) => {
-    console.log(users)
     const [userData, setUserData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const navigation = useNavigation();

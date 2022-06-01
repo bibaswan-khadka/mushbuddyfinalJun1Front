@@ -73,25 +73,7 @@ const CommentsScreen = (props) => {
 
     return(
         <View style={{flex:1}}>
-            <FlatList
-                style={styles.root}
-                data={comments}
-                ItemSeparatorComponent={() => {
-                    return (
-                        <View style={styles.separator} />
-                    )
-                }}
-                keyExtractor={(item) => {
-                    return item._id;
-                }}
-                renderItem={(item) => {
-                    const comment = item.item;
-                    return(
-                        <Comment comment={comment}/>
-                    );
-                }}
-            />
-            <KeyboardAvoidingView style={{position: 'absolute', left: 0, right: 0, bottom: 0}}>
+            <KeyboardAvoidingView>
                 <View style={styles.inputContainer}>
                     <TextInput style={styles.inputs}
                         placeholder="Leave a comment"
@@ -113,6 +95,24 @@ const CommentsScreen = (props) => {
                     </View>
                 </View>
             </KeyboardAvoidingView>
+            <FlatList
+                style={styles.root}
+                data={comments}
+                ItemSeparatorComponent={() => {
+                    return (
+                        <View style={styles.separator} />
+                    )
+                }}
+                keyExtractor={(item) => {
+                    return item._id;
+                }}
+                renderItem={(item) => {
+                    const comment = item.item;
+                    return(
+                        <Comment comment={comment}/>
+                    );
+                }}
+            />
         </View>
     )
 }

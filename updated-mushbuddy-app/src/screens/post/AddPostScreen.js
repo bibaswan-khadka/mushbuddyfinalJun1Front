@@ -8,6 +8,7 @@ import {
     ActivityIndicator,
     KeyboardAvoidingView,
     ScrollView,
+    Alert
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -15,7 +16,7 @@ import * as postActions from '../../store/actions/posts';
 import { COLORS } from '../../components/stylesheets/colors';
 import { showMessage } from "react-native-flash-message";
 import RenderCatalogEntry from '../catalog/render_catalog_entry';
-import ImagePickerExample from './ImagePicker'
+import ImageUpload from './ImagePicker'
 // props is just all the default properties sent through navigator
 const AddPostScreen = (props) => {
     const { route } = props;
@@ -46,6 +47,10 @@ const AddPostScreen = (props) => {
         // setLongitude('');
         setIsLoading(false);
     }
+
+    useEffect(() => {
+        console.log('images',images)
+    }, [images]);
 
     useEffect(() => {
         if (!firstLoad) {
@@ -222,7 +227,7 @@ const AddPostScreen = (props) => {
                     </Text>
                     {renderSelectButton()}
                     {renderDescriptionInputField()}
-                    <ImagePickerExample setImages = {setImages}></ImagePickerExample>
+                    <ImageUpload setImages = {setImages} images={images}></ImageUpload>
                     {renderPostButton()}
                     {/* {renderTitleInputField()} */}
                     {/* {renderContentInputField()} */}

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Image, View, Platform,  ActivityIndicator } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-
-export default function ImagePickerExample({setImages}) {
-  const [image, setImage] = useState(null);
+import Colors from '../../constants/Colors';
+export default function ImageUpload({setImages,images}) {
+  const [image, setImage] = useState(images);
   const [url, setUrl] = useState('');
   const [uploading, setUploading] = useState(false);
 
@@ -18,11 +18,9 @@ export default function ImagePickerExample({setImages}) {
     });
 
     if (!result.cancelled) {
-        setUploading(true)
-      setImage(result.uri);
       const { uri, base64 } = result
       uploadImage(uri, base64)
-      setUploading(false)
+      setImage(result.uri);
     }
   };
 
@@ -46,6 +44,8 @@ export default function ImagePickerExample({setImages}) {
 
     setUrl(data.url)
     setImages(data.url)
+    console.log('fiisheduploading')
+    console.log(data.url)
   }
 
   const renderUploadButton = () => {
@@ -67,11 +67,21 @@ export default function ImagePickerExample({setImages}) {
           )
       }
   }
+
+  const loadingIndicator = () => {
+    if (shouldFetch){
+        return (
+            <View style={styles.centered} >
+                <ActivityIndicator size='large' color={Colors.GREY_1} />
+            </View>
+        );
+    }
+  }
+
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Button title="Pick an image from camera roll" onPress={pickImage} />
       {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-      {renderUploadButton()}
     </View>
   );
 }
