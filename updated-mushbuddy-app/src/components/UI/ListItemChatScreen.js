@@ -135,7 +135,7 @@ const ListItemChatScreen = (props) => {
         return (
             <View style={styles.chat}>
                 <TouchableOpacity onPress={() => navigation.push('ChatScreen', { userId: user._id, name: user.firstName })}>
-                    <Ionicons name="ios-chatbubble-outline" size={18} color="black" />
+                    <Ionicons name="ios-chatbubble-outline" size={22} color="black" />
                 </TouchableOpacity>
             </View>
         );
