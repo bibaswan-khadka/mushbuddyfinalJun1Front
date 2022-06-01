@@ -85,7 +85,7 @@ const Posts = ({ id, auth, dispatch, posts }) => {
         return (
             <View style={styles.entryImageContainer}>
                 <Image
-                    source={photo}
+                    source={{uri : photo}}
                     style={styles.entryImage}
                 />
             </View>
@@ -144,10 +144,12 @@ const Posts = ({ id, auth, dispatch, posts }) => {
     // Render the header & additional information of each entry.
     // HEADER: (1) Name of mushroom that was found, (2) number of days that've passed since this find was catalogued.
     // ADD'TL INFO: (1) Location of the find, (2) whether the user took a photo of the mushroom they found.
-    const renderInfo = (name, timestamp, taggedLocation) => {
+    const renderInfo = (name, timestamp, taggedLocation,curr_post) => {
         return (
-            <View style={styles.entryInfoContainer}>
-
+            <TouchableOpacity style={styles.entryInfoContainer} onPress={() => {
+                console.log("callout pressed");
+                goToDetailedPost(curr_post.title, curr_post.description, curr_post.date, curr_post.images,curr_post.mushroom);
+            }}>
                 <View style={styles.entryHeaderLine}>
                     {renderMushroomName(name)}
                     {renderDate(timestamp)}
@@ -158,7 +160,7 @@ const Posts = ({ id, auth, dispatch, posts }) => {
                     {renderPhotoTakenConfirmation()}
                 </View>
 
-            </View>
+            </TouchableOpacity>
         );
     }
 
@@ -231,12 +233,19 @@ const Posts = ({ id, auth, dispatch, posts }) => {
         );
     }
 
+    const goToDetailedPost = (title, description, date, image, mushroom) => {
+        // navigation.navigate('DetailedPost', {postTitle: title, postDesc: description});
+        navigation.navigate('DetailedPost', {
+          postTitle: title, postDesc: description, postDate: date, postImage: image, mushroom: mushroom
+        });
+      }
+
     const renderHistoryEntry = (name, timestamp, taggedLocation, photo,likes,userId,curr_post) => {
         return (
-            <View style={styles.entryContainer}>
+            <View style={styles.entryContainer} >
                 {renderLikeButton(likes,userId,curr_post)}
                 {renderImage(photo)}
-                {renderInfo(name, timestamp, taggedLocation)}
+                {renderInfo(name, timestamp, taggedLocation, curr_post)}
                 <TouchableHighlight onPress={()=>{navigation.navigate('Comments', { curr_post, post, page, id })}}>
                     <View><Ionicons name="md-chatbox-outline" size={18} color="black" />
                     <Text>{curr_post.numComments} </Text></View>
@@ -249,7 +258,7 @@ const Posts = ({ id, auth, dispatch, posts }) => {
         if (shouldFetch){
             return (
                 <View style={styles.centered} >
-                    <ActivityIndicator size='large' color={Colors.primary} />
+                    <ActivityIndicator size='large' color={Colors.GREY_1} />
                 </View>
             );
         }
@@ -276,7 +285,7 @@ const Posts = ({ id, auth, dispatch, posts }) => {
                 windowSize={11}
                 renderItem={({ item }) => {
                     //console.log(item);
-                    return renderHistoryEntry(item.title, item.createdAt, "Hanover, NH", SamplePhoto1,item.likes,auth.user._id,item);
+                    return renderHistoryEntry(item.title, item.createdAt, "Hanover, NH", item.mushroom.images,item.likes,auth.user._id,item);
                 }}
             />
             {loadingIndicator()}

@@ -46,7 +46,7 @@ export default StyleSheet.create({
         width: '100%',
     },
     entryHeaderText: {
-        fontSize: 18,
+        fontSize: 15,
         color: '#222222',
     },
     entryTimestamp: {

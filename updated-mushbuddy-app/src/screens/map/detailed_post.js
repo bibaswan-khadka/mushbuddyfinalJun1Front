@@ -8,11 +8,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { getDataAPI } from '../../utils/fetchData';
 
+import RenderCatalogEntry from '../catalog/render_catalog_entry';
+
 // unused old UI
 
 const DetailedPost = ({ route, navigation }) => {
-    const { postTitle, postDesc, postDate, postImage } = route.params;
+    const { postTitle, postDesc, postDate, postImage, mushroom } = route.params;
 
+    console.log(mushroom)
     // not sure what these are for
     const [data, setData] = useState([]);
     const [query, setQuery] = useState('');
@@ -33,8 +36,10 @@ const DetailedPost = ({ route, navigation }) => {
     }
     
     return (
-        <View style={styles.container}>
-
+        <ScrollView showsVerticalScrollIndicator={false}> 
+            {mushroom && <RenderCatalogEntry
+                item={mushroom}
+                navigation={navigation}></RenderCatalogEntry>}
             <View style={styles.headerContainer}>
                 <Text style={styles.headerText}>
                     {postTitle}
@@ -45,7 +50,6 @@ const DetailedPost = ({ route, navigation }) => {
                 <Image source={{uri: postImage}}
                 style={{width: 150, height: 150}} />
             </View>
-
             <View style={styles.inputFieldIndividual}>
                 <Text style={styles.subheaderText}>
                     Details
@@ -54,7 +58,6 @@ const DetailedPost = ({ route, navigation }) => {
                     Mushroom found on: {postDate}
                 </Text> 
             </View>
-
             <View style={styles.inputFieldIndividual}>
                 <Text style={styles.subheaderText}>
                     Description
@@ -63,8 +66,7 @@ const DetailedPost = ({ route, navigation }) => {
                     {postDesc}
                 </Text> 
             </View>
-
-        </View>
+        </ScrollView>
     );
 }
 
@@ -118,6 +120,7 @@ const styles = StyleSheet.create({
         color: '#222222',
         marginBottom: 10,
         letterSpacing: 0.5,
+        marginTop: 15,
     },
     bodyText: {
         fontSize: 16,

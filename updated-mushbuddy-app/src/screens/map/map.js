@@ -47,10 +47,10 @@ const Map = ( { navigation } ) => {
     navigation.navigate('CreatePost');
   }
 
-  const goToDetailedPost = (title, description, date, image) => {
+  const goToDetailedPost = (title, description, date, image, mushroom) => {
     // navigation.navigate('DetailedPost', {postTitle: title, postDesc: description});
     navigation.navigate('DetailedPost', {
-      postTitle: title, postDesc: description, postDate: date, postImage: image
+      postTitle: title, postDesc: description, postDate: date, postImage: image, mushroom: mushroom
     });
   }
 
@@ -123,7 +123,7 @@ const Map = ( { navigation } ) => {
                 <Callout
                       onPress={() => {
                           console.log("callout pressed");
-                          goToDetailedPost(post.title, post.description, post.date, post.images);
+                          goToDetailedPost(post.title, post.description, post.date, post.images,post.mushroom);
                       }}>
                       <View style={{
                           flexDirection: 'column',

@@ -63,6 +63,8 @@
     "react-native-vector-icons": "^9.0.0",
     "react-native-web": "0.17.1",
     "react-native-zip-archive": "^6.0.8",
+    "react-navigation": "^4.4.4",
+    "react-navigation-stack": "^2.10.4",
     "react-redux": "^7.2.6",
     "react-router-native": "^6.2.1",
     "recyclerlistview": "^3.0.5",

@@ -22,6 +22,7 @@ import MapNavigator from '../screens/map/map_navigator';
 import CommentsScreen from '../screens/user/CommentsScreen'
 import ChatListScreen from '../screens/chat/ChatListScreen';
 import ChatScreen from '../screens/chat/ChatScreen';
+import DetailedPost, { screenOptions as addDetailScreenOptions } from '../screens/map/detailed_post.js';
 
 const defaultNavOptions = {
     headerStyle: {
@@ -48,9 +49,21 @@ const FindPeopleNavigator = () => {
                 options={userProfileScreenOptions}
             />
             <FindPeopleStackNavigator.Screen
+                name="DetailedPost"
+                component={DetailedPost}
+                options={addDetailScreenOptions}
+            />
+            <FindPeopleStackNavigator.Screen
                 name="UserStats"
                 component={UserStatsScreen}
                 options={userStatsScreenOptions}
+            />
+            <FindPeopleStackNavigator.Screen
+                name="Detail"
+                component={CatalogEntry}
+                options={{
+                    headerShown: false
+                }}
             />
              <FindPeopleStackNavigator.Screen
                 name="Comments"
@@ -86,9 +99,21 @@ const UserNavigator = () => {
                 options={userStatsScreenOptions}
             />
             <UserStackNavigator.Screen
+                name="DetailedPost"
+                component={DetailedPost}
+                options={addDetailScreenOptions}
+            />
+            <UserStackNavigator.Screen
                 name="EditProfile"
                 component={EditProfileScreen}
                 options={editProfileScreenOptions}
+            />
+             <UserStackNavigator.Screen
+                name="Detail"
+                component={CatalogEntry}
+                options={{
+                    headerShown: false
+                }}
             />
             <UserStackNavigator.Screen
                 name="Comments"

@@ -59,7 +59,7 @@ const MushroomCatalog = ({ navigation, route }) => {
         if (shouldFetch){
             return (
                 <View style={styles.centered} >
-                    <ActivityIndicator size='large' color={Colors.primary} />
+                    <ActivityIndicator size='large' color={Colors.GREY_1} />
                 </View>
             );
         }

@@ -73,10 +73,7 @@ const MapNavigator = () => {
                 name="Detail"
                 component={CatalogEntry}
                 options={{
-                    title: 'Catalog: Entry details',
-                    headerStyle: {
-                        backgroundColor: 'transparent',
-                    },
+                    headerShown: false
                 }}
             />
             <Stack.Screen
